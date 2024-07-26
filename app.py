@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from flask import Flask, request, render_template
 
 app = Flask(__name__)
@@ -28,7 +27,7 @@ def consultar():
     pregunta = request.form['pregunta'].lower()
     respuesta = fallas_soluciones.get(pregunta, "No se encontró una solución para el problema.")
     return render_template('resultado.html', respuesta=respuesta)
-=======
+
 from flask import Flask, request, render_template
 
 app = Flask(__name__)
@@ -58,4 +57,4 @@ def consultar():
     pregunta = request.form['pregunta'].lower()
     respuesta = fallas_soluciones.get(pregunta, "No se encontró una solución para el problema.")
     return render_template('resultado.html', respuesta=respuesta)
->>>>>>> 817532e4d1064cef74d17d6cc51f2f743cb0ddb5
+
