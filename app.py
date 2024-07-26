@@ -1,9 +1,9 @@
-import openai
 from flask import Flask, request, render_template
+import openai
 
 app = Flask(__name__)
 
-# Configura tu clave API de OpenAI
+# Configura tu clave API
 openai.api_key = 'sk-proj-7JQ0XqwiR3X2S726OkvQT3BlbkFJSJzSklT1XDwtBDZtsFlo'
 
 @app.route('/')
@@ -12,19 +12,28 @@ def index():
 
 @app.route('/consultar', methods=['POST'])
 def consultar():
-    pregunta = request.form['pregunta']
-    
-    # Llamada a la API de OpenAI usando el modelo de chat
-    response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",  # O el modelo que prefieras
-        messages=[
-            {"role": "user", "content": pregunta}
-        ],
-        max_tokens=150
-    )
-    
-    respuesta = response.choices[0].message['content'].strip()
-    return render_template('resultado.html', respuesta=respuesta)
+    try:
+        pregunta = request.form['pregunta']
+        respuesta = obtener_respuesta_openai(pregunta)
+        return render_template('resultado.html', respuesta=respuesta)
+    except Exception as e:
+        # Manejo de errores
+        print(f"Error: {e}")
+        return render_template('resultado.html', respuesta="Ocurrió un error al procesar la solicitud.")
+
+def obtener_respuesta_openai(pregunta):
+    try:
+        response = openai.ChatCompletion.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "user", "content": pregunta}
+            ]
+        )
+        return response.choices[0].message['content']
+    except Exception as e:
+        # Manejo de errores
+        print(f"Error en OpenAI API: {e}")
+        return "Ocurrió un error al obtener la respuesta."
 
 if __name__ == '__main__':
     app.run(debug=True)
