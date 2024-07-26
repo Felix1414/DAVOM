@@ -1,10 +1,15 @@
 from flask import Flask, request, render_template
 import openai
+from dotenv import load_dotenv
+import os
+
+# Carga las variables de entorno del archivo .env
+load_dotenv()
 
 app = Flask(__name__)
 
-# Configura tu clave API
-openai.api_key = 'sk-proj-tV2O0ZBsOb33boFbuGZ5T3BlbkFJdz0w8mtUyEqzMdPhc8wb'
+# Configura tu clave API desde la variable de entorno
+openai.api_key = os.getenv('OPENAI_API_KEY')
 
 @app.route('/')
 def index():
@@ -37,4 +42,3 @@ def obtener_respuesta_openai(pregunta):
 
 if __name__ == '__main__':
     app.run(debug=True)
-
