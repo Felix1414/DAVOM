@@ -3,7 +3,7 @@ import openai
 
 app = Flask(__name__)
 
-# Configura tu clave API directamente aquí
+# Configura tu clave API
 openai.api_key = 'sk-proj-7JQ0XqwiR3X2S726OkvQT3BlbkFJSJzSklT1XDwtBDZtsFlo'
 
 @app.route('/')
@@ -37,3 +37,4 @@ def obtener_respuesta_openai(pregunta):
 
 if __name__ == '__main__':
     app.run(debug=True)
+
